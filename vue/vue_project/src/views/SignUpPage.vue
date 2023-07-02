@@ -17,7 +17,6 @@ export default {
         password: user.password,
         password_confirmation: user.password_confirmation
       });
-      this.$router.push({ name: "TopPage" });
     }
   }
 }
