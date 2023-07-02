@@ -7,11 +7,34 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     sampleItems: [],
+    user: {},
   },
-  getters: {
-    sampleItems: state => state.sampleItems,
+  mutations: {
+    setSampleItems(state, { sampleItems }) {
+      state.sampleItems = sampleItems;
+    },
+    addSampleItem(state, { sampleItem }) {
+      state.sampleItems.push(sampleItem);
+    },
+    CREATE_USER(state, { user }) {
+      state.user = user;
+    },
   },
   actions: {
+    async createUser({ commit }, { name, email, password, password_confirmation }) {
+      const res = await api.post('/sign_up', { user: {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation
+      }});
+      alert("ユーザー登録が完了しました");
+
+      // これを書かないとデータがちゃんと飛ばない
+      const user = res.data.user
+      commit('CREATE_USER', { user });
+      return user;
+    },
     async loadSampleItems({commit}) {
       const res = await api.get('sample_items');
       const sampleItems = res.data.sample_items;
@@ -25,13 +48,8 @@ export default new Vuex.Store({
       return sampleItem;
     },
   },
-  mutations: {
-    setSampleItems(state, { sampleItems }) {
-      state.sampleItems = sampleItems;
-    },
-    addSampleItem(state, { sampleItem }) {
-      state.sampleItems.push(sampleItem);
-    },
+  getters: {
+    sampleItems: state => state.sampleItems,
   },
-  modules: {}
+  // modules: {}
 })
