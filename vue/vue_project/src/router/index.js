@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
+
 import TopPage from '@/views/TopPage'
 import SamplePage from '@/views/SamplePage'
 import SignUpPage from '@/views/SignUpPage'
 import SignInPage from '@/views/SignInPage'
-import store from '@/store'
+import CreateTaskPage from '@/views/CreateTaskPage'
 
 Vue.use(VueRouter)
 const routes = [
@@ -27,6 +29,11 @@ const routes = [
     path: '/sign_in',
     name: 'SignInPage',
     component: SignInPage
+  },
+  {
+    path: '/create_task',
+    name: 'CreateTaskPage',
+    component: CreateTaskPage
   },
 ]
 
