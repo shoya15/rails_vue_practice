@@ -10,6 +10,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     user: false,
+    tasks: [],
   },
   mutations: {
     SET_USER(state, { user }) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     LOG_OUT_USER(state) {
       state.user = false;
+    },
+    ADD_TASK(state, { task }) {
+      state.tasks.push(task);
     },
   },
   actions: {
@@ -54,7 +58,18 @@ export default new Vuex.Store({
         commit('LOG_OUT_USER');
         alert('サインアウトしました');
       }
-    }
+    },
+    async createTask({ commit }, { content }) {
+      const res = await api.post('/create_task', { task: { content: content }});
+
+      const task = res.data.task;
+      if(task){
+        commit('ADD_TASK', { task });
+        alert('タスクを追加しました');
+        router.push({ name: 'TopPage' });
+        return task;
+      }
+    },
   },
   getters: {
   }
