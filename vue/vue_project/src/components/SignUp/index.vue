@@ -9,7 +9,7 @@
     <div>
       <label>
         メールアドレス
-        <input type="email" class="email" v-model="user.email" />
+        <input class="email" v-model="user.email" />
       </label>
     </div>
     <div>
