@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
   include ActionController::RequestForgeryProtection
   include ApiRendering
+  include SessionsHelper
 
   protect_from_forgery with: :exception
 
