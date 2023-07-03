@@ -87,6 +87,9 @@ export default new Vuex.Store({
   getters: {
     allTasks(state) {
       return state.tasks;
+    },
+    myTasks(state){ 
+      return state.tasks.filter((task) => task.user_id === state.user.user_id);
     }
   }
 })

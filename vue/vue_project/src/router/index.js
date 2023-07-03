@@ -8,6 +8,7 @@ import SignUpPage from '@/views/SignUpPage'
 import SignInPage from '@/views/SignInPage'
 import CreateTaskPage from '@/views/CreateTaskPage'
 import AllTasksPage from '@/views/AllTasksPage'
+import MyTasksPage from '@/views/MyTasksPage'
 
 Vue.use(VueRouter)
 const routes = [
@@ -40,7 +41,12 @@ const routes = [
     path: '/all_tasks',
     name: 'AllTasksPage',
     component: AllTasksPage
-  }
+  },
+  {
+    path: '/my_tasks_page',
+    name: 'MyTasksPage',
+    component: MyTasksPage
+  },
 ]
 
 const router = new VueRouter({
