@@ -1,15 +1,21 @@
 <template>
   <div id="app">
+    <MainHeader />
     <router-view/>
   </div>
 </template>
 
 <script>
 import api from '@/api';
+import MainHeader from "@/components/MainHeader";
+
 export default {
   name: 'App',
   created() {
     this.setCSRFToken();
+  },
+  components: {
+    MainHeader,
   },
   methods: {
     async setCSRFToken() {
