@@ -16,7 +16,8 @@ class TasksController < ApplicationController
     if @task.save
       render_success task: {
         content: task_params[:content],
-        status: task_params[:status]
+        status: task_params[:status],
+        user_id: @task.user.id
       }
     else
       render_error

@@ -5,7 +5,8 @@ class SessionsController < ApplicationController
       log_in user
       render_success session: {
         name_or_email: session_params[:name_or_email],
-        password: session_params[:password]
+        password: session_params[:password],
+        user_id: session[:user_id]
       }
     else
       render_error
