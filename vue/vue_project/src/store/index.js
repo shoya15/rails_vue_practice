@@ -10,7 +10,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     user: false,
-    tasks: [],
+    tasks: []
   },
   mutations: {
     SET_USER(state, { user }) {
@@ -22,6 +22,9 @@ export default new Vuex.Store({
     ADD_TASK(state, { task }) {
       state.tasks.push(task);
     },
+    LOAD_TASKS(state, tasks) {
+      state.tasks = tasks;
+    }
   },
   actions: {
     async createUser({ commit }, { name, email, password, password_confirmation }) {
@@ -70,7 +73,20 @@ export default new Vuex.Store({
         return task;
       }
     },
+    async loadTasksIfNeeded({ commit }) {
+      if (this.state.tasks.length) return this.state.tasks;
+      const res = await api.get('/all_tasks');
+
+      const tasks = res.data;
+      if(tasks){
+        commit('LOAD_TASKS', tasks);
+        return tasks;
+      }
+    }
   },
   getters: {
+    allTasks(state) {
+      return state.tasks;
+    }
   }
 })
