@@ -1,5 +1,5 @@
 <template>
-  <SignUp @create="createUserHandler" />
+  <SignUp @create_user="createUserHandler" />
 </template>
 
 <script>
