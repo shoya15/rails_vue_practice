@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     createUser() {
-      this.$emit("create", this.user);
+      this.$emit("create_user", this.user);
     },
   },
 }
