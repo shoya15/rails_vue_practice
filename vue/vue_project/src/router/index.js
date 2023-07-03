@@ -7,6 +7,7 @@ import SamplePage from '@/views/SamplePage'
 import SignUpPage from '@/views/SignUpPage'
 import SignInPage from '@/views/SignInPage'
 import CreateTaskPage from '@/views/CreateTaskPage'
+import AllTasksPage from '@/views/AllTasksPage'
 
 Vue.use(VueRouter)
 const routes = [
@@ -35,6 +36,11 @@ const routes = [
     name: 'CreateTaskPage',
     component: CreateTaskPage
   },
+  {
+    path: '/all_tasks',
+    name: 'AllTasksPage',
+    component: AllTasksPage
+  }
 ]
 
 const router = new VueRouter({
