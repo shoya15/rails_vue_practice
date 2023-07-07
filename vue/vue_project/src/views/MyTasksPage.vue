@@ -1,27 +1,41 @@
 <template>
   <div>
-    <MyTasks :my_tasks="my_tasks" />
+    <TasksStatus @button_status="updateButtonStatus"/>
+    <MyTasks :my_tasks="my_tasks" @update="updateHandler" />
   </div>
 </template>
 
 <script>
 import MyTasks from "@/components/MyTasks";
+import TasksStatus from "@/components/TasksStatus";
 
 export default {
   components: {
     MyTasks,
+    TasksStatus
+  },
+  data() {
+    return {
+      status: null,
+    };
   },
   created() {
-    this.myTasks();
+    this.loadTasks();
   },
   computed: {
     my_tasks() {
-      return this.$store.getters.myTasks;
+      return this.$store.getters.myTasks({ status: this.status });
     },
   },
   methods: {
-    myTasks() {
-      return this.$store.dispatch("loadTasksIfNeeded");
+    async loadTasks() {
+      await this.$store.dispatch("loadTasksIfNeeded");
+    },
+    updateButtonStatus(status) {
+      this.status = status;
+    },
+    updateHandler(my_task) {
+      this.$store.dispatch("updateTask", {my_task});
     }
   },
 };
