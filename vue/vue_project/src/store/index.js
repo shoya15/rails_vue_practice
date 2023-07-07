@@ -24,6 +24,10 @@ export default new Vuex.Store({
     },
     LOAD_TASKS(state, tasks) {
       state.tasks = tasks;
+    },
+    UPDATE_TASK(state, task) {
+      const index = state.tasks.findIndex((t) => t.id === task.id);
+      state.tasks.splice(index, 1, task);
     }
   },
   actions: {
@@ -63,7 +67,7 @@ export default new Vuex.Store({
       }
     },
     async createTask({ commit }, { content }) {
-      const res = await api.post('/create_task', { task: { content: content }});
+      const res = await api.post('/tasks', { task: { content: content }});
 
       const task = res.data.task;
       if(task){
@@ -75,21 +79,37 @@ export default new Vuex.Store({
     },
     async loadTasksIfNeeded({ commit }) {
       if (this.state.tasks.length) return this.state.tasks;
-      const res = await api.get('/all_tasks');
+      const res = await api.get('/tasks');
 
       const tasks = res.data;
       if(tasks){
         commit('LOAD_TASKS', tasks);
         return tasks;
       }
-    }
+    },
+    async updateTask({ commit }, { task }) {
+      const res = await api.put(`/tasks/${task.id}`, task);
+
+      const checked_task = res.data.task;
+      if(checked_task){
+        commit('UPDATE_TASK', checked_task);
+        return checked_task;
+      }
+    },
   },
   getters: {
-    allTasks(state) {
-      return state.tasks;
+    allTasks: (state) => ({ status }) => {
+      if(status === null || status === false){
+        return state.tasks.filter((task) => !task.status);
+      }
+      return state.tasks.filter((task) => task.status);
     },
-    myTasks(state){ 
-      return state.tasks.filter((task) => task.user_id === state.user.user_id);
+    myTasks: (state) => ({ status }) =>{ 
+      const my_tasks = state.tasks.filter((task) => task.user_id === state.user.user_id);
+      if(status === null || status === false){
+        return my_tasks.filter((my_task) => !my_task.status);
+      }
+      return my_tasks.filter((my_task) => my_task.status);
     }
   }
 })

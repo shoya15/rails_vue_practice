@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   scope :api do
     get '/get_csrf_token', to: 'csrf_tokens#show'
 
@@ -12,10 +13,10 @@ Rails.application.routes.draw do
     delete '/sign_out', to: 'sessions#destroy'
 
     # タスク
-    get '/all_tasks', to: 'tasks#index'
-    get '/task_detail', to: 'tasks#show'
-    post '/create_task', to: 'tasks#create'
-    delete '/delete_task', to: 'tasks#destroy'
+    get '/tasks', to: 'tasks#index'
+    get '/tasks/:id', to: 'tasks#show'
+    post '/tasks', to: 'tasks#create'
+    put '/tasks/:id', to: 'tasks#update'
 
     get '*path', to: 'application#not_found'
   end

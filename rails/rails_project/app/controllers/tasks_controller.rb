@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
-  before_action :find_task, only: [:show, :destroy]
+  before_action :find_task, only: [:show, :update]
   
   def index
     @tasks = Task.all
-    # .order(created_at: :desc)
     render_success @tasks
   end
 
@@ -17,15 +16,22 @@ class TasksController < ApplicationController
       render_success task: {
         content: task_params[:content],
         status: task_params[:status],
-        user_id: @task.user.id
+        user_id: @task.user.id,
+        id: @task.id
       }
     else
       render_error
     end
   end
 
-  def destroy
-    @post.destroy if current_user?
+  def update
+    @task.update(task_params)
+    render_success task: {
+      content: @task.content,
+      status: true,
+      user_id: @task.user_id,
+      id: @task.id
+    }
   end
 
   private
