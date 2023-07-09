@@ -5,6 +5,14 @@
       <div class="task">
         {{ task.content }}
         ← created by {{ task.user_name }}
+        
+        <span v-if="isOwnerUser(task.user_id) && favoriteTasks(task.id)">
+          <button type="button" class="favorite" @click="addFavoriteTask(task)">♡</button>
+        </span>
+        <span v-else-if="isOwnerUser(task.user_id)">
+          <button type="button" class="favorite" @click="removeFavoriteTask(task)">❤️</button>
+        </span>
+
         <span v-if="isOwnerUser(task.user_id) && followedUser(task.user_id)">
           <button type="button" class="follow-button" @click="followUser(task)">フォロー</button>
         </span>
@@ -31,6 +39,10 @@ export default {
     followings: {
       type: Array,
       default: () => [],
+    },
+    favorites: {
+      type: Array,
+      default: () => [],
     }
   },
   methods: {
@@ -48,6 +60,15 @@ export default {
     },
     filterTasks(filter_option) {
       this.$emit("filter_tasks", filter_option)
+    },
+    favoriteTasks(task_id) {
+      return !this.favorites.includes(task_id);
+    },
+    addFavoriteTask(task) {
+      this.$emit("add_favorite_task", task);
+    },
+    removeFavoriteTask(task) {
+      this.$emit("remove_favorite_task", task);
     }
   }
 }
@@ -57,19 +78,24 @@ export default {
 .task {
   margin: 20px;
   border-bottom: solid 1px #C0C0C0;
+
+  .favorite {
+    background-color: #FFF;
+    border: #FFF;
+  }
   .follow-button, .unfollow-button{
     margin-bottom: 10px;
     color: #000;
     background-color: #fff;
     transition: .25s;
-    border: 2px solid #333;
+    border: 1px solid #333;
     border-radius: 5px;
   }
   
   .follow-button:hover{
       color: #fff;
       background-color: blue;
-      border: 2px solid blue;
+      border: 1px solid blue;
   }
   .unfollow-button:hover{
       color: #fff;

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_07_142809) do
+ActiveRecord::Schema.define(version: 2023_07_09_135749) do
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "task_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_favorites_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_favorites_on_user_id_and_task_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
 
   create_table "relationships", force: :cascade do |t|
     t.integer "followed_id"
@@ -35,5 +45,7 @@ ActiveRecord::Schema.define(version: 2023_07_07_142809) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "favorites", "tasks"
+  add_foreign_key "favorites", "users"
   add_foreign_key "tasks", "users"
 end

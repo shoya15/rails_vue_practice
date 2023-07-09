@@ -4,9 +4,12 @@
     <AllTasks
       :tasks="tasks"
       :followings="followings"
+      :favorites="favorites"
       @follow_user="followUser"
       @unfollow_user="unfollowUser"
       @filter_tasks="filterTasks"
+      @add_favorite_task="addFavoriteTask"
+      @remove_favorite_task="removeFavoriteTask"
     />
   </div>
 </template>
@@ -29,6 +32,7 @@ export default {
   created() {
     this.loadTasks();
     this.loadFollowings();
+    this.loadFavorites();
   },
   computed: {
     tasks() {
@@ -36,6 +40,9 @@ export default {
     },
     followings() {
       return this.$store.getters.followings;
+    },
+    favorites() {
+      return this.$store.getters.favorites;
     }
   },
   methods: {
@@ -56,6 +63,15 @@ export default {
     },
     filterTasks(filter_option) {
       this.filter_option = filter_option;
+    },
+    async loadFavorites() {
+      await this.$store.dispatch("loadFavorites");
+    },
+    addFavoriteTask(task) {
+      this.$store.dispatch("addFavoriteTask", { task_id: task.id })
+    },
+    removeFavoriteTask(task) {
+      this.$store.dispatch("removeFavoriteTask", { task_id: task.id })
     }
   }
 };
