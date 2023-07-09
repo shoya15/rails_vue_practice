@@ -13,7 +13,6 @@ Rails.application.routes.draw do
 
     # タスク
     get '/tasks', to: 'tasks#index'
-    get '/tasks/:id', to: 'tasks#show'
     post '/tasks', to: 'tasks#create'
     put '/tasks/:id', to: 'tasks#update'
 
@@ -21,6 +20,11 @@ Rails.application.routes.draw do
     get '/followings', to: 'relationships#index'
     post '/follow', to: 'relationships#create'
     delete '/unfollow/:id', to: 'relationships#destroy'
+
+    # ファイト(いいね)
+    get '/favorites', to: 'favorites#index'
+    post '/favorites', to: 'favorites#create'
+    delete '/favorites/:id', to: 'favorites#destroy'
 
     get '*path', to: 'application#not_found'
   end
