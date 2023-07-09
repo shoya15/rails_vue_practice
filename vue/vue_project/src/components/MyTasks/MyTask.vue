@@ -8,8 +8,6 @@
         @change="updateHandler"
       />
       {{ my_task.content }}
-      ← created by user:
-      {{ my_task.user_id }}
     </div>
   </div>
 </template>
