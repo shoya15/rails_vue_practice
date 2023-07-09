@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async loadTasks() {
-      await this.$store.dispatch("loadTasksIfNeeded");
+      await this.$store.dispatch("loadTasks");
     },
     updateButtonStatus(status) {
       this.status = status;

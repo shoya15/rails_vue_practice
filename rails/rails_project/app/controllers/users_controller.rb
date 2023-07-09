@@ -9,11 +9,9 @@ class UsersController < ApplicationController
         password: user_params[:password],
         password_confirmation: user_params[:password_confirmation],
       }
-    else
-      render_error
     end
   end
-
+  
   private
 
   def user_params
