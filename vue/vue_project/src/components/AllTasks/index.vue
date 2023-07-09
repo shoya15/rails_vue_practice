@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FilterTasks @filter_tasks="filterTasks"/>
     <div v-for="task in tasks" :key="task.id">
       <div class="task">
         {{ task.content }}
@@ -16,7 +17,12 @@
 </template>
 
 <script>
+import FilterTasks from "./FilterTasks";
+
 export default {
+  components: {
+    FilterTasks
+  },
   props: {
     tasks: {
       type: Array,
@@ -39,6 +45,9 @@ export default {
     },
     unfollowUser(task) {
       this.$emit("unfollow_user", task);
+    },
+    filterTasks(filter_option) {
+      this.$emit("filter_tasks", filter_option)
     }
   }
 }
