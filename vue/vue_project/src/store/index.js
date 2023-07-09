@@ -148,14 +148,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    allTasks: (state) => ({ status }) => {
-      // console.log(state.tasks)
-      if(status === null || status === false){
-        return state.tasks.filter((task) => !task.status);
-      }
-      return state.tasks.filter((task) => task.status);
-    },
-    myTasks: (state) => ({ status }) =>{ 
+    myTasks: (state) => ({ status }) => { 
       const my_tasks = state.tasks.filter((task) => task.user_id === state.user.user_id);
       if(status === null || status === false){
         return my_tasks.filter((my_task) => !my_task.status);
@@ -165,6 +158,24 @@ export default new Vuex.Store({
     followings(state) {
       // console.log(state.followings)
       return state.followings;
+    },
+    filteredTasks: (state) => ({ status, filter_option }) => {
+      return state.tasks
+        .filter((task) => {
+          if(status === null || status === false) return !task.status;
+          return task.status;
+        })
+        .filter((task) => {
+          if(!filter_option["フォローしているユーザーのタスク"] && !filter_option["いいねしたタスク"]) return state.tasks;
+          if(filter_option["フォローしているユーザーのタスク"]) {
+            return state.followings.includes(task.user_id);
+          }
+        })
+        // .filter((task) => {
+        //   if(filter_option[いいねしたタスク]) {
+        //     return state.fights.includes(task.id)
+        //   }
+        // })
     }
   }
 })

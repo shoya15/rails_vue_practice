@@ -1,7 +1,13 @@
 <template>
   <div>
     <TasksStatus @button_status="updateButtonStatus"/>
-    <AllTasks :tasks="tasks" :followings="followings" @follow_user="followUser" @unfollow_user="unfollowUser" />
+    <AllTasks
+      :tasks="tasks"
+      :followings="followings"
+      @follow_user="followUser"
+      @unfollow_user="unfollowUser"
+      @filter_tasks="filterTasks"
+    />
   </div>
 </template>
 
@@ -17,6 +23,7 @@ export default {
   data() {
     return {
       status: null,
+      filter_option: {}
     };
   },
   created() {
@@ -25,11 +32,11 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.getters.allTasks({ status: this.status });
+      return this.$store.getters.filteredTasks({ status: this.status, filter_option: this.filter_option });
     },
     followings() {
       return this.$store.getters.followings;
-    },
+    }
   },
   methods: {
     async loadTasks() {
@@ -46,7 +53,10 @@ export default {
     },
     unfollowUser(task) {
       this.$store.dispatch("unfollowUser", { user_id: task.user_id })
+    },
+    filterTasks(filter_option) {
+      this.filter_option = filter_option;
     }
-  },
+  }
 };
 </script>
