@@ -62,6 +62,14 @@ https://www.sejuku.net/blog/54072
 
 https://autovice.jp/articles/176
 
+14. フォロー機能
+
+https://qiita.com/nakachan1994/items/e6107fe3003f6515e385
+
+15. Railsコントローラーデバック
+
+https://style.potepan.com/articles/34859.html
+
 ## Docker
 下記のコマンド早見表のコマンドはコンテナに入ってからでないと実行できない
 ```bash
