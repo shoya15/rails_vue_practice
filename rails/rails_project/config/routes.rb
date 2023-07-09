@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :tasks
   scope :api do
     get '/get_csrf_token', to: 'csrf_tokens#show'
 
@@ -17,6 +16,11 @@ Rails.application.routes.draw do
     get '/tasks/:id', to: 'tasks#show'
     post '/tasks', to: 'tasks#create'
     put '/tasks/:id', to: 'tasks#update'
+
+    # フォロー
+    get '/followings', to: 'relationships#index'
+    post '/follow', to: 'relationships#create'
+    delete '/unfollow/:id', to: 'relationships#destroy'
 
     get '*path', to: 'application#not_found'
   end
