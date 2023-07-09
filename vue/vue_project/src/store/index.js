@@ -201,6 +201,8 @@ export default new Vuex.Store({
       return state.followings;
     },
     filteredTasks: (state) => ({ status, filter_option }) => {
+      console.log(state.tasks)
+      console.log(state.favorites)
       return state.tasks
         .filter((task) => {
           if(status === null || status === false) return !task.status;
@@ -209,14 +211,11 @@ export default new Vuex.Store({
         .filter((task) => {
           if(!filter_option["フォローしているユーザーのタスク"] && !filter_option["いいねしたタスク"]) return state.tasks;
           if(filter_option["フォローしているユーザーのタスク"]) {
-            return state.followings.includes(task.user_id);
+            if(filter_option["いいねしたタスク"]) return state.followings.includes(task.user_id) && state.favorites.includes(task.id);
+            return state.followings.includes(task.user_id)
           }
+          if(filter_option["いいねしたタスク"]) return state.favorites.includes(task.id);
         })
-        // .filter((task) => {
-        //   if(filter_option[いいねしたタスク]) {
-        //     return state.fights.includes(task.id)
-        //   }
-        // })
     },
     favorites(state) {
       return state.favorites;
