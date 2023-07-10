@@ -70,6 +70,12 @@ https://qiita.com/nakachan1994/items/e6107fe3003f6515e385
 
 https://style.potepan.com/articles/34859.html
 
+16. ファイト（いいね）機能
+
+https://qiita.com/RIN_HM/items/968abd9e31df6631a3ed
+
+https://munerinlog.com/rails-like-function
+
 ## Docker
 下記のコマンド早見表のコマンドはコンテナに入ってからでないと実行できない
 ```bash
