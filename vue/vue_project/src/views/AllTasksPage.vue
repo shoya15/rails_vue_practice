@@ -5,6 +5,7 @@
       :tasks="tasks"
       :followings="followings"
       :favorites="favorites"
+      :favorites_count="favorites_count"
       @follow_user="followUser"
       @unfollow_user="unfollowUser"
       @filter_tasks="filterTasks"
@@ -33,6 +34,7 @@ export default {
     this.loadTasks();
     this.loadFollowings();
     this.loadFavorites();
+    this.loadFavoritesCount();
   },
   computed: {
     tasks() {
@@ -43,6 +45,9 @@ export default {
     },
     favorites() {
       return this.$store.getters.favorites;
+    },
+    favorites_count() {
+      return this.$store.getters.favorites_count;
     }
   },
   methods: {
@@ -72,7 +77,10 @@ export default {
     },
     removeFavoriteTask(task) {
       this.$store.dispatch("removeFavoriteTask", { task_id: task.id })
-    }
+    },
+    async loadFavoritesCount() {
+      await this.$store.dispatch("loadFavoritesCount");
+    },
   }
 };
 </script>

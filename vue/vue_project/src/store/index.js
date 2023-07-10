@@ -12,7 +12,8 @@ export default new Vuex.Store({
     user: false,
     tasks: [],
     followings: [],
-    favorites: []
+    favorites: [],
+    favorites_count: null
   },
   mutations: {
     SET_USER(state, { user }) {
@@ -47,9 +48,17 @@ export default new Vuex.Store({
     ADD_FAVORITE_TASK(state, { favorite_task }) {
       if(!state.favorites.includes(favorite_task)) state.favorites.push(favorite_task);
     },
-    REMOVE_FAVORITE_TASK(state, { favorite_task }) {
+    REMOVE_FAVORITE_TASK(state, favorite_task) {
       const index = state.favorites.findIndex((id) => id === favorite_task);
       state.favorites.splice(index, 1);
+      // 上書き防止
+      if(!state.favorites.length) state.favorites = [-1];
+    },
+    COUNT_FAVORITES(state, favorites_count) {
+      state.favorites_count = favorites_count;
+    },
+    RESET_FAVORITES(state) {
+      state.favorites = [];
     }
   },
   actions: {
@@ -86,6 +95,7 @@ export default new Vuex.Store({
 
       if(!res.data){
         commit('LOG_OUT_USER');
+        commit("RESET_FAVORITES");
         alert('サインアウトしました');
         router.push({ name: 'SignInPage' });
       }
@@ -94,7 +104,6 @@ export default new Vuex.Store({
     // タスク
     async createTask({ commit }, { content }) {
       const res = await api.post('/tasks', { task: { content: content }});
-
       const task = res.data.task;
       if(task){
         commit('ADD_TASK', { task });
@@ -104,16 +113,12 @@ export default new Vuex.Store({
       }
     },
     async loadTasks({ commit }) {
-      if (this.state.tasks.length){
-        return this.state.tasks;
-      }else{
-        const res = await api.get('/tasks');
-
-        const tasks = res.data;
-        if(tasks){
-          commit('LOAD_TASKS', tasks);
-          return tasks;
-        }
+      if(this.state.tasks.length) return this.state.tasks;
+      const res = await api.get('/tasks');
+      const tasks = res.data.tasks;
+      if(tasks){
+        commit('LOAD_TASKS', tasks);
+        return tasks;
       }
     },
     async updateTask({ commit }, task) {
@@ -137,12 +142,23 @@ export default new Vuex.Store({
       }
     },
     async loadFollowings({ commit }) {
-        const res = await api.get('/followings');
-        const followings = res.data.followings;
+      const res1 = await api.get('/followings');
+      // サインインし直してもらう
+      if(res1.data.error){
+        const res2 = await api.delete('/sign_out');
+
+        if(!res2.data){
+          commit('LOG_OUT_USER');
+          alert("サインインし直してください");
+          router.push({ name: 'SignInPage' });
+        }
+      }else{
+        const followings = res1.data.followings;
         if(followings){
           commit('LOAD_FOLLOWINGS', followings);
           return followings;
         }
+      }
     },    
     async unfollowUser({ commit }, { user_id }) {
       const res = await api.delete(`/unfollow/${user_id}`);
@@ -160,7 +176,7 @@ export default new Vuex.Store({
     // ファイト(いいね)
     async addFavoriteTask({ commit }, { task_id }) {
       const res = await api.post('/favorites', { task_id: task_id });
-      const favorite_task = res.data;
+      const favorite_task = res.data.favorite_task;
       if(favorite_task){
         commit('ADD_FAVORITE_TASK', { favorite_task });
         alert('いいねしました！');
@@ -169,22 +185,37 @@ export default new Vuex.Store({
       }
     },
     async loadFavorites({ commit }) {
-      const res = await api.get('/favorites');
-      const favorites = res.data.favorites;
-      if(favorites){
-        commit('LOAD_FAVORITES', favorites);
-        return favorites;
+      console.log(this.state.favorites);
+      if(this.state.favorites.length) return this.state.favorites;
+      const res1 = await api.get('/favorites');
+      // サインインし直してもらう
+      if(res1.data.error){
+        return 0;
+      }else{
+        const favorites = res1.data.favorites;
+        if(favorites){
+          commit('LOAD_FAVORITES', favorites);
+          return favorites;
+        }
       }
     },    
     async removeFavoriteTask({ commit }, { task_id }) {
       const res = await api.delete(`/favorites/${task_id}`);
-
-      const remove_favorite_task = res.data.task.id;
+      const remove_favorite_task = res.data.task.task_id;
       if(remove_favorite_task){
         commit('REMOVE_FAVORITE_TASK', remove_favorite_task);
         alert("いいねを外しました");
         location.reload();
         return remove_favorite_task;
+      }
+    },
+    async loadFavoritesCount({ commit }) {
+      const res = await api.get('/favorites_count');
+
+      const favorites_count = res.data.favorites_count;
+      if(favorites_count){
+        commit('COUNT_FAVORITES', favorites_count);
+        return favorites_count;
       }
     },
   },
@@ -197,12 +228,9 @@ export default new Vuex.Store({
       return my_tasks.filter((my_task) => my_task.status);
     },
     followings(state) {
-      // console.log(state.followings)
       return state.followings;
     },
     filteredTasks: (state) => ({ status, filter_option }) => {
-      console.log(state.tasks)
-      console.log(state.favorites)
       return state.tasks
         .filter((task) => {
           if(status === null || status === false) return !task.status;
@@ -219,6 +247,9 @@ export default new Vuex.Store({
     },
     favorites(state) {
       return state.favorites;
+    },
+    favorites_count(state) {
+      return state.favorites_count;
     },
   }
 })

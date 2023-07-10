@@ -1,8 +1,14 @@
 class TasksController < ApplicationController
+  before_action :tasks, only: [:index, :favorites_count]
   
   def index
-    @tasks = Task.all
-    render_success @tasks
+    render_success tasks: @tasks
+  end
+
+  def favorites_count
+    favorites_count = {}
+    @tasks.each{ favorites_count[_1.id] = _1.favorites.count }
+    render_success favorites_count: favorites_count
   end
 
   def create
@@ -37,5 +43,9 @@ class TasksController < ApplicationController
       :content,
       :status
     )
+  end
+
+  def tasks
+    @tasks = Task.all
   end
 end

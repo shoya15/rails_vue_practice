@@ -8,9 +8,11 @@
         
         <span v-if="isOwnerUser(task.user_id) && favoriteTasks(task.id)">
           <button type="button" class="favorite" @click="addFavoriteTask(task)">♡</button>
+          {{ favorites_count[task.id] }}
         </span>
-        <span v-else-if="isOwnerUser(task.user_id)">
+        <span v-else-if="isOwnerUser(task.user_id) && !favoriteTasks(task.id)">
           <button type="button" class="favorite" @click="removeFavoriteTask(task)">❤️</button>
+          {{ favorites_count[task.id] }}
         </span>
 
         <span v-if="isOwnerUser(task.user_id) && followedUser(task.user_id)">
@@ -43,6 +45,10 @@ export default {
     favorites: {
       type: Array,
       default: () => [],
+    },
+    favorites_count: {
+      type: Object,
+      default: () => {},
     }
   },
   methods: {
