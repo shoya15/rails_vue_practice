@@ -1,8 +1,12 @@
 class RelationshipsController < ApplicationController
   def index
-    @users = current_user.relationships.ids
-    # 配列でなく連想配列の形にして飛ばす必要がある
-    render_success followings: @users
+    if !current_user
+      render_success error: "loading_error"
+    else
+      @users = current_user.relationships.ids
+      # 配列でなく連想配列の形にして飛ばす必要がある
+      render_success followings: @users
+    end
   end
 
   def create
