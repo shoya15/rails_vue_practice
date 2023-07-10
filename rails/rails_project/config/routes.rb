@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get '/favorites', to: 'favorites#index'
     post '/favorites', to: 'favorites#create'
     delete '/favorites/:id', to: 'favorites#destroy'
+    get '/favorites_count', to: 'tasks#favorites_count'
 
     get '*path', to: 'application#not_found'
   end
