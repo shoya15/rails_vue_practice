@@ -52,7 +52,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(store.state.user && (to.name === "SignUpPage" || to.name === "SignInPage")){
     next({ name: "TopPage" });
-  }else if(!store.state.user &&  (to.name !== "SignInPage" && to.name !== "SignUpPage")){
+  }else if(!store.state.user &&  (to.name !== "SignInPage" && to.name !== "SignUpPage" && to.name !== "TopPage")){
     next(false);
   }else{
     next();
