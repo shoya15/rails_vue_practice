@@ -1,7 +1,6 @@
 <template>
   <div class="top-page">
     <div class="title">トップページ</div>
-    <router-link :to="{ name: 'SamplePage' }">サンプルページを見る</router-link>
   </div>
 </template>
 
