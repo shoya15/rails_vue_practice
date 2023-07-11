@@ -30,7 +30,7 @@ class TasksController < ApplicationController
     @task.update(task_params)
     render_success task: {
       content: @task.content,
-      status: true,
+      status: @task.status,
       user_id: @task.user_id,
       id: @task.id
     }
