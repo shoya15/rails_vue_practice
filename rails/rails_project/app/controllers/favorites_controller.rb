@@ -14,7 +14,7 @@ class FavoritesController < ApplicationController
   def create
     @task = Task.find_by(id: params[:task_id])
     @favorite = Favorite.new(user_id: current_user.id, task_id: @task.id)
-    render_success favorite_task: @favorite.task_id if @favorite.save
+    render_success favorite_task: @favorite if @favorite.save
   end
 
   def destroy
