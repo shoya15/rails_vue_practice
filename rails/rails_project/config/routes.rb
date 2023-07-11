@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
   scope :api do
     get '/get_csrf_token', to: 'csrf_tokens#show'
-
-    # サンプル
-    get '/sample_items', to: 'sample_items#index'
-    post '/sample_items', to: 'sample_items#create'
-
+    
     # ユーザー
     post '/sign_up', to: 'users#create'
     post '/sign_in', to: 'sessions#create'
