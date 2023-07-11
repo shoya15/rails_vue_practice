@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 
 import TopPage from '@/views/TopPage'
-import SamplePage from '@/views/SamplePage'
 import SignUpPage from '@/views/SignUpPage'
 import SignInPage from '@/views/SignInPage'
 import CreateTaskPage from '@/views/CreateTaskPage'
@@ -16,11 +15,6 @@ const routes = [
     path: '/',
     name: 'TopPage',
     component: TopPage
-  },
-  {
-    path: '/sample',
-    name: 'SamplePage',
-    component: SamplePage
   },
   {
     path: '/sign_up',
