@@ -76,6 +76,14 @@ https://qiita.com/RIN_HM/items/968abd9e31df6631a3ed
 
 https://munerinlog.com/rails-like-function
 
+17. JSDoc(可読性を上げる)
+
+https://ics.media/entry/6789/
+
+18. パスワードの表示切り替え
+
+https://qiita.com/m_daichi/items/1a924b6a23ee704c349e
+
 ## Docker
 下記のコマンド早見表のコマンドはコンテナに入ってからでないと実行できない
 ```bash
