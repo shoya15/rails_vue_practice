@@ -55,12 +55,3 @@ Promise or async/awaitを使う(async/awaitの方が直感的に分かりやす�
 例）api.get(/example);
 4. storeにデータを保存する
 5. 要件に応じてGETやPOSTを使い分けていく
-
-router
-import TaskDetailPage from '@/views/DetailTaskPage'
-
-  {
-    path: '/task_detail',
-    name: 'TaskDetailPage',
-    component: TaskDetailPage
-  },
