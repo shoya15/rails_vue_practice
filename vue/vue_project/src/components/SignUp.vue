@@ -23,9 +23,12 @@
         パスワード（確認）
         <input :type="inputType" v-model="user.password_confirmation" />
       </label>
-      <br>
-      <input type="checkbox" @click="inputTypeHandler" class="input-type" />
-      パスワードを表示する
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" @click="inputTypeHandler" class="input-type" />
+        パスワードを表示する
+      </label>
     </div>
     <button type="button" @click="createUser" class="button">登録する</button>
   </form>
@@ -73,8 +76,7 @@ form {
   }
 
   .input-type {
-    margin-left: 230px;
-    margin-bottom: 30px;
+    margin-left: 180px;
     width: initial;
     height: initial;
   }

@@ -1,12 +1,14 @@
 <template>
   <div>
-    <input 
+    <label>
+      <input 
       type="checkbox"
       :id="operated_task.id"
       v-model="operated_task.status"
       @change="updateTaskStatus"
     />
     {{ my_task.content }}
+    </label>
   </div>
 </template>
 
