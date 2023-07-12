@@ -46,7 +46,7 @@ form{
     font-weight: bold;
     display: inline-block;
     margin-left: 20px;
-    padding: 20px;
+    padding: 20px 0 10px 20px;
   }
   input {
     margin: 0 20px;

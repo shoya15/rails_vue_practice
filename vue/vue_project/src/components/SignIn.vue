@@ -11,9 +11,12 @@
         パスワード
         <input :type="inputType" class="password" v-model="user.password" />
       </label>
-      <br>
-      <input type="checkbox" @click="inputTypeHandler" class="input-type" />
-      パスワードを表示する
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" @click="inputTypeHandler" class="input-type" />
+        パスワードを表示する
+      </label>
     </div>
     <button type="button" @click="signIn" class="button" >サインインする</button>
   </form>
@@ -53,7 +56,7 @@ form {
   }
 
   .input-type {
-    margin-left: 270px;
+    margin-left: 220px;
     width: initial;
     height: initial;
   }
