@@ -1,4 +1,11 @@
 class SessionsController < ApplicationController
+  def check_signed_in
+    pp "hohogjfipajdfpjfpe"
+    pp current_user
+    pp "hfasdhaljjzkdsjzsid"
+    render_success if current_user.nil?
+  end
+
   def create
     @name_or_email = session_params[:name_or_email]
     @password = session_params[:password]

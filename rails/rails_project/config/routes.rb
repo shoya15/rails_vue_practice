@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     get '/get_csrf_token', to: 'csrf_tokens#show'
     
     # ユーザー
+    get '/check_signed_in', to: 'sessions#check_signed_in'
     post '/sign_up', to: 'users#create'
     post '/sign_in', to: 'sessions#create'
     delete '/sign_out', to: 'sessions#destroy'
