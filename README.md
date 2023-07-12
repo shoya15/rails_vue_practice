@@ -1,5 +1,12 @@
 # Ruby on Rails x Vue.js practice
 ## 実際の動作
+https://github.com/shoya15/rails_vue_practice/assets/107241111/237b628b-1356-46fd-a627-f498e4d1d92d
+
+上記動画にフォローを解除する操作を含めていませんでした。
+
+↓ フォロー解除の様子
+
+https://github.com/shoya15/rails_vue_practice/assets/107241111/7d0269a9-6536-4c9e-b542-8073ed33013e
 
 ## References(memo.mdに補足あり)
 1. Docker
