@@ -2,9 +2,10 @@
   <div>
     <MyTask
       v-for="my_task in my_tasks"
+      class="task"
       :key="my_task.id"
       :my_task="my_task"
-      @update="updateHandler"
+      @update_task_status="updateTaskStatusHandler"
     />
   </div>
 </template>
@@ -23,8 +24,8 @@ export default {
     MyTask
   },
   methods: {
-    updateHandler(my_task) {
-      this.$emit("update", my_task);
+    updateTaskStatusHandler(operated_task) {
+      this.$emit("update_task_status", operated_task);
     }
   }
 }

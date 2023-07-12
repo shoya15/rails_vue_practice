@@ -10,11 +10,8 @@ export default {
     SignIn
   },
   methods: {
-    async signInHandler(user) {
-      await this.$store.dispatch("signIn", {
-        name_or_email: user.name_or_email,
-        password: user.password
-      });
+    signInHandler(user) {
+      this.$store.dispatch("signIn", user);
     }
   }
 }

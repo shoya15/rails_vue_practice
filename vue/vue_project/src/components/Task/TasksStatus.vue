@@ -1,7 +1,14 @@
 <template>
-  <div class="status flex-item">
+  <div class="filter-option-wrap">
     <span v-for="status in Object.keys(STATUSES)" :key="status">
-      <input type="radio" :id="status" v-model="selectedStatus" :value="status" @click="updateStatusButton" />
+      <input 
+        type="radio"
+        class="filter-option"
+        :id="status"
+        v-model="selectedStatus"
+        :value="status"
+        @click="updateButtonStatus"
+      />
       <label :for="status">{{ status }}</label>
     </span>
   </div>
@@ -23,8 +30,8 @@ export default {
     }
   },
   methods: {
-    updateStatusButton() {
-      this.$emit("button_status", !this.STATUSES[this.selectedStatus]);
+    updateButtonStatus() {
+      this.$emit("update_button_status", !this.STATUSES[this.selectedStatus]);
     }
   }
 };

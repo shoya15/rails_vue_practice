@@ -10,13 +10,8 @@ export default {
     SignUp
   },
   methods: {
-    async createUserHandler(user) {
-      await this.$store.dispatch("createUser", {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        password_confirmation: user.password_confirmation
-      });
+    createUserHandler(user) {
+      this.$store.dispatch("createUser", user);
     }
   }
 }

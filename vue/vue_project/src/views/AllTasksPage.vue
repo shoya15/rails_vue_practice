@@ -1,23 +1,26 @@
 <template>
   <div>
-    <TasksStatus @button_status="updateButtonStatus"/>
+    <TasksStatus @update_button_status="updateButtonStatus"/>
     <AllTasks
       :tasks="tasks"
       :followings="followings"
       :favorites="favorites"
       :favorites_count="favorites_count"
-      @follow_user="followUser"
-      @unfollow_user="unfollowUser"
-      @filter_tasks="filterTasks"
-      @add_favorite_task="addFavoriteTask"
-      @remove_favorite_task="removeFavoriteTask"
+
+      @filter_tasks="filterTasksHandler"
+
+      @follow_user="followUserHandler"
+      @unfollow_user="unfollowUserHandler"
+
+      @add_favorite_task="addFavoriteTaskHandler"
+      @remove_favorite_task="removeFavoriteTaskHandler"
     />
   </div>
 </template>
 
 <script>
-import AllTasks from "@/components/AllTasks";
-import TasksStatus from "@/components/TasksStatus";
+import AllTasks from "@/components/Task/AllTasks";
+import TasksStatus from "@/components/Task/TasksStatus";
 
 export default {
   components: {
@@ -26,7 +29,7 @@ export default {
   },
   data() {
     return {
-      status: null,
+      button_status: null,
       filter_option: {}
     };
   },
@@ -38,7 +41,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.getters.filteredTasks({ status: this.status, filter_option: this.filter_option });
+      return this.$store.getters.filteredTasks({ button_status: this.button_status, filter_option: this.filter_option });
     },
     followings() {
       return this.$store.getters.followings;
@@ -51,36 +54,48 @@ export default {
     }
   },
   methods: {
+    // フィルタリング
+    /**
+     * 完了/未完了ボタンのステータスを取得するための関数
+     * @param {boolean} button_status 完了/未完了ボタンのステータス
+    */
+    updateButtonStatus(button_status) {
+      this.button_status = button_status;
+    },
+    
+    filterTasksHandler(filter_option) {
+      this.filter_option = filter_option;
+    },
+
+    // データロード
     async loadTasks() {
       await this.$store.dispatch("loadTasks");
-    },
-    updateButtonStatus(status) {
-      this.status = status;
     },
     async loadFollowings() {
       await this.$store.dispatch("loadFollowings");
     },
-    followUser(task) {
-      this.$store.dispatch("followUser", { user_id: task.user_id })
-    },
-    unfollowUser(task) {
-      this.$store.dispatch("unfollowUser", { user_id: task.user_id })
-    },
-    filterTasks(filter_option) {
-      this.filter_option = filter_option;
-    },
     async loadFavorites() {
       await this.$store.dispatch("loadFavorites");
-    },
-    addFavoriteTask(task) {
-      this.$store.dispatch("addFavoriteTask", { task_id: task.id })
-    },
-    removeFavoriteTask(task) {
-      this.$store.dispatch("removeFavoriteTask", { task_id: task.id })
     },
     async loadFavoritesCount() {
       await this.$store.dispatch("loadFavoritesCount");
     },
+
+    // フォロー
+    followUserHandler(task) {
+      this.$store.dispatch("followUser", { user_id: task.user_id })
+    },
+    unfollowUserHandler(task) {
+      this.$store.dispatch("unfollowUser", { user_id: task.user_id })
+    },
+
+    // いいね
+    addFavoriteTaskHandler(task) {
+      this.$store.dispatch("addFavoriteTask", { task_id: task.id })
+    },
+    removeFavoriteTaskHandler(task) {
+      this.$store.dispatch("removeFavoriteTask", { task_id: task.id })
+    }
   }
 };
 </script>

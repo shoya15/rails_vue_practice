@@ -9,8 +9,11 @@
     <div>
       <label>
         パスワード
-        <input class="password" v-model="user.password" />
+        <input :type="inputType" class="password" v-model="user.password" />
       </label>
+      <br>
+      <input type="checkbox" @click="inputTypeHandler" class="input-type" />
+      パスワードを表示する
     </div>
     <button type="button" @click="signIn" class="button" >サインインする</button>
   </form>
@@ -24,53 +27,39 @@ export default {
         name_or_email: "",
         password: ""
       },
+      input_status: false
     };
   },
   methods: {
     signIn() {
       this.$emit("sign_in", this.user);
     },
+    inputTypeHandler() {
+      this.input_status = !this.input_status;
+    }
   },
+  computed: {
+    inputType() {
+      return this.input_status ? "text" : "password";
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 form {
-  label, input, .button {
-    cursor: pointer;
-  }
-
-  label {
-    font-weight: bold;
-    display: inline-block;
-    margin-left: 20px;
-    padding: 20px;
-  }
-
-  input {
-    margin-left: 20px;
-    width: 550px;
-    height: 30px;
-  }
-
   .password {
     margin-left: 130px;
   }
+
+  .input-type {
+    margin-left: 270px;
+    width: initial;
+    height: initial;
+  }
   .button{
-    padding: 10px;
     margin-top: 20px;
     margin-left: 450px;
-    color: #000;
-    font-weight: bold;
-    background-color: #fff;
-    transition: .25s;
-    border: 2px solid #000;
-    border-radius: 5px;
-  }
-
-  .button:hover{
-      color: #fff;
-      background-color: #000;
   }
 }
 </style>

@@ -3,18 +3,16 @@
 </template>
 
 <script>
-import CreateTask from "@/components/CreateTask";
+import CreateTask from "@/components/Task/CreateTask";
 
 export default {
   components: {
     CreateTask,
   },
   methods: {
-    async createTaskHandler(task) {
-      await this.$store.dispatch("createTask", {
-        content: task.content
-      });
-    },
-  },
+    createTaskHandler(task) {
+      this.$store.dispatch("createTask", task);
+    }
+  }
 };
 </script>

@@ -1,20 +1,25 @@
 class SessionsController < ApplicationController
   def create
-    user = User.find_by(name: session_params[:name_or_email]) || User.find_by(email: session_params[:name_or_email])
-    if user && user.authenticate(session_params[:password])
-      log_in user
+    @name_or_email = session_params[:name_or_email]
+    @password = session_params[:password]
+    @user = User.find_by(name:  @name_or_email) ||
+            User.find_by(email: @name_or_email)
+
+    if @user && @user.authenticate(@password)
+     sign_in @user
       render_success session: {
-        name_or_email: session_params[:name_or_email],
-        password: session_params[:password],
-        user_id: session[:user_id]
+        name_or_email: @name_or_email,
+        password: @password,
+        user_id:  session[:user_id]
       }
-    else
-      render_error
     end
   end
 
   def destroy
-    log_out if logged_in?
+    if signed_in?
+      sign_out
+      render_success
+    end
   end
 
   private

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     post '/follow', to: 'relationships#create'
     delete '/unfollow/:id', to: 'relationships#destroy'
 
-    # ファイト(いいね)
+    # いいね
     get '/favorites', to: 'favorites#index'
     post '/favorites', to: 'favorites#create'
     delete '/favorites/:id', to: 'favorites#destroy'
