@@ -55,19 +55,28 @@ export default new Vuex.Store({
     ADD_FAVORITE_TASK(state, favorite_task) {
       if(!state.favorites.includes(favorite_task)) state.favorites.push(favorite_task);
     },
+
+    /**
+     * いいねを外す時に呼び出される関数
+     
+     * 初回以外は`state.favorites`を`[-1]`で初期化するようにして、いいねが上書きされないようにしている
+     */
     REMOVE_FAVORITE_TASK(state, remove_favorite_task) {
       const index = state.favorites.findIndex((id) => id === remove_favorite_task);
       state.favorites.splice(index, 1);
-      // 上書き防止
       if(!state.favorites.length) state.favorites = [-1];
+    },
+    /**
+     * サインアウトするときに呼び出される関数
+     
+     * 上書きされるのを防ぐため、`state.favorites===[-1]`のときは空にならないようにしている
+     */
+    RESET_FOLLOWINGS_AND_FAVORITES(state) {
+      state.followings = [];
+      if(2 <= state.favorites.length) state.favorites = [];
     },
     COUNT_FAVORITES(state, favorites_count) {
       state.favorites_count = favorites_count;
-    },
-    RESET_FOLLOWINGS_AND_FAVORITES(state) {
-      state.followings = [];
-      // 上書き防止
-      if(state.favorites.length >= 2) state.favorites = [];
     }
   },
   actions: {
@@ -98,6 +107,19 @@ export default new Vuex.Store({
         commit('LOG_OUT_USER');
         commit("RESET_FOLLOWINGS_AND_FAVORITES");
         alert('サインアウトしました');
+        router.push({ name: 'SignInPage' });
+      }
+    },
+
+    /**
+     * `current_user`がnillのときに、サインインページにリダイレクトさせる関数
+     */
+    async checkSignedIn() {
+      const res = await api.get('/check_signed_in');
+
+      if(res.data.status){
+        this.state.user = null;
+        alert("サインインし直してください");
         router.push({ name: 'SignInPage' });
       }
     },
