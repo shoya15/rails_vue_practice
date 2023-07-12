@@ -1,7 +1,12 @@
 <template>
-  <div>
+  <div class="filter-option-wrap">
     <span v-for="filter_option in Object.keys(FILTER)" :key="filter_option">
-      <input type="checkbox" :id="filter_option" @change="filterTasks(filter_option)" />
+      <input
+        type="checkbox"
+        class="filter-option"
+        :id="filter_option"
+        @change="filterTasks(filter_option)"
+      />
       <label :for="filter_option">{{ filter_option }}</label>
     </span>
   </div>

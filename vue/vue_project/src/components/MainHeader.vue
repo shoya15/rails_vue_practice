@@ -8,7 +8,7 @@
         <router-link to="/create_task">タスク登録</router-link>
         <router-link to="/all_tasks">タスク一覧</router-link>
         <router-link to="/my_tasks_page">マイページ</router-link>
-        <a @click="signOutButton">サインアウト</a>
+        <a class="sign_out_button" @click="signOutButton">サインアウト</a>
       </div>
       <div v-else>
         <router-link to="/sign_up">新規登録</router-link>
@@ -21,8 +21,8 @@
 <script>
 export default {
   methods: {
-    async signOutButton() {
-      await this.$store.dispatch("signOut");
+    signOutButton() {
+      this.$store.dispatch("signOut");
     }
   },
   computed: {
@@ -43,6 +43,7 @@ export default {
   }
 
   nav a {
+    cursor: pointer;
     margin: 15px;
     text-decoration: none;
     color: #000;

@@ -15,14 +15,17 @@
     <div>
       <label>
         パスワード
-        <input type="password" class="password" v-model="user.password" />
+        <input :type="inputType" class="password" v-model="user.password" />
       </label>
     </div>
     <div>
       <label>
         パスワード（確認）
-        <input type="password" v-model="user.password_confirmation" />
+        <input :type="inputType" v-model="user.password_confirmation" />
       </label>
+      <br>
+      <input type="checkbox" @click="inputTypeHandler" class="input-type" />
+      パスワードを表示する
     </div>
     <button type="button" @click="createUser" class="button">登録する</button>
   </form>
@@ -38,35 +41,27 @@ export default {
         password: "",
         password_confirmation: "",
       },
+      input_status: false
     };
   },
   methods: {
     createUser() {
       this.$emit("create_user", this.user);
     },
+    inputTypeHandler() {
+      this.input_status = !this.input_status;
+    }
   },
+  computed: {
+    inputType() {
+      return this.input_status ? "text" : "password";
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 form {
-  label, input, .button {
-    cursor: pointer;
-  }
-
-  label {
-    font-weight: bold;
-    display: inline-block;
-    margin-left: 20px;
-    padding: 20px;
-  }
-
-  input {
-    margin: 20px;
-    width: 550px;
-    height: 30px;
-  }
-
   .name {
     margin-left: 130px;
   }
@@ -77,20 +72,11 @@ form {
     margin-left: 80px;
   }
 
-  .button{
-    padding: 10px;
-    margin-left: 420px;
-    color: #000;
-    font-weight: bold;
-    background-color: #fff;
-    transition: .25s;
-    border: 2px solid #000;
-    border-radius: 5px;
-  }
-
-  .button:hover{
-      color: #fff;
-      background-color: #000;
+  .input-type {
+    margin-left: 230px;
+    margin-bottom: 30px;
+    width: initial;
+    height: initial;
   }
 }
 </style>
