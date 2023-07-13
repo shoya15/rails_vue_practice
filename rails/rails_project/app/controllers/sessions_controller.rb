@@ -1,8 +1,5 @@
 class SessionsController < ApplicationController
   def check_signed_in
-    pp "hohogjfipajdfpjfpe"
-    pp current_user
-    pp "hfasdhaljjzkdsjzsid"
     render_success if current_user.nil?
   end
 
