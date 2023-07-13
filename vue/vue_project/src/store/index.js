@@ -55,25 +55,16 @@ export default new Vuex.Store({
     ADD_FAVORITE_TASK(state, favorite_task) {
       if(!state.favorites.includes(favorite_task)) state.favorites.push(favorite_task);
     },
-
-    /**
-     * いいねを外す時に呼び出される関数
-     
-     * 初回以外は`state.favorites`を`[-1]`で初期化するようにして、いいねが上書きされないようにしている
-     */
     REMOVE_FAVORITE_TASK(state, remove_favorite_task) {
       const index = state.favorites.findIndex((id) => id === remove_favorite_task);
       state.favorites.splice(index, 1);
-      if(!state.favorites.length) state.favorites = [-1];
     },
     /**
-     * サインアウトするときに呼び出される関数
-     
-     * 上書きされるのを防ぐため、`state.favorites===[-1]`のときは空にならないようにしている
+     * サインアウトするときに呼び出される関数     
      */
     RESET_FOLLOWINGS_AND_FAVORITES(state) {
       state.followings = [];
-      if(2 <= state.favorites.length) state.favorites = [];
+      state.favorites = [];
     },
     COUNT_FAVORITES(state, favorites_count) {
       state.favorites_count = favorites_count;
@@ -232,7 +223,7 @@ export default new Vuex.Store({
   getters: {
     /**
      * タスクをフィルタリングするための関数
-     * @param {boolean} button_status　完了/未完了ボタンのステータス
+     * @param {boolean} button_status 完了/未完了ボタンのステータス
      * @param {Object} filter_option フィルタリングの条件
      * @returns {Object} フィルタリング後のタスクを返す
      */

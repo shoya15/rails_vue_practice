@@ -12,7 +12,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     @task     = Task.find_by(id: params[:id])
-    @favorite = Favorite.find_by(task_id: @task.id)
+    @favorite = Favorite.find_by(task_id: @task.id, user_id: current_user.id)
     render_success task: @favorite if @favorite.destroy
   end
 end
