@@ -21,7 +21,7 @@ class ArticleDetailScreen extends StatefulWidget {
 }
 
 class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
-  ArticleText currentArticle = ArticleText(text: "");
+  ArticleText currentArticle = ArticleText(text: "", url: "");
 
   Future getArticle() async {
     final res = await getArticleText(widget.article.id);
@@ -90,6 +90,6 @@ Future<ArticleText> getArticleText(articleId) async {
     final dynamic body = jsonDecode(res.body);
     return ArticleText.fromJson(body);
   }else {
-    return ArticleText(text: "");
+    return ArticleText(text: "", url: "");
   }
 }
