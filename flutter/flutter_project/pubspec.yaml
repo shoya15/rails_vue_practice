@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.18.1
   flutter_dotenv: ^5.1.0
   webview_flutter: ^3.0.4
+  shared_preferences: ^2.0.13 
 
 dev_dependencies:
   flutter_test:
