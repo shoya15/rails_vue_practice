@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/screens/all_articles_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'package:flutter_project/screens/all_articles_screen.dart';
+import 'package:flutter_project/screens/favorite_article.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -20,7 +22,44 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF55C500)),
         textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.white),
       ),
-      home: const AllArticlesScreen(),
+      home: const MyStatefulWidget(),
     );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  static const _screens = [
+    AllArticlesScreen(),
+    FavoriteArticleScreen()
+  ];
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: _screens[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
+            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'お気に入り'),
+          ],
+          type: BottomNavigationBarType.fixed,
+        ));
   }
 }
