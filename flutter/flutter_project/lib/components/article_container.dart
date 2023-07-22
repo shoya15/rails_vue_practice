@@ -1,8 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_project/models/article.dart';
 import 'package:flutter_project/screens/article_detail_screen.dart';
 import 'package:flutter_project/models/favorite.dart';
@@ -49,7 +48,8 @@ class _ArticleContainer extends State<ArticleContainer> {
       Favorite(
         title: widget.article.title,
         postTime: DateFormat('yyyy/MM/dd').format(DateTime.now()),
-        url: widget.article.linkUrl
+        url: widget.article.linkUrl,
+        authorName: widget.article.authorName
       )
     ];
   }
