@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'package:flutter_project/models/favorite.dart';
+import '../../models/favorite.dart';
 
+/// ブラウザの記事のページに遷移するための関数
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({ 
     super.key,

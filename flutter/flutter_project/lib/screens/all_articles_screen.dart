@@ -1,9 +1,9 @@
-import 'package:flutter_project/components/article_container.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_project/models/article.dart';
+import '../models/article.dart';
+import '../components/article_container.dart';
 
 class AllArticlesScreen extends StatefulWidget {
   const AllArticlesScreen({super.key});
@@ -31,30 +31,26 @@ class _AllArticlesScreenState extends State<AllArticlesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Qiita Trend Search')),
+      appBar: AppBar(title: const Text('Qiita Trend Articles')),
       body: FutureBuilder(
         future: getQiitaTrend(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: Text("LOADING..."));
+            return const Center(child: Text("LOADING...", style: TextStyle(color: Colors.black),));
           }else {
-            if(articles.isEmpty) {
-              return const Center(child: Text("NO Articles"));
-            }else {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      children: articles
-                        .map((article) => ArticleContainer(article: article))
-                        .toList()
-                    ),
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: articles
+                      .map((article) => ArticleContainer(article: article))
+                      .toList()
                   ),
-                ],
-              );
-            }
+                ),
+              ],
+            );
           }
-        },
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -69,9 +65,9 @@ class _AllArticlesScreenState extends State<AllArticlesScreen> {
   }
 }
 
+/// Qiitaのトレンド記事を取得するための関数
 Future<List<Article>> getQiitaTrend() async {
   final uri = Uri.parse('https://qiita-api.vercel.app/api/trend');
-
   final http.Response res = await http.get(uri);
 
   if(res.statusCode == 200) {

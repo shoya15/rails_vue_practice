@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:flutter_project/screens/all_articles_screen.dart';
-import 'package:flutter_project/screens/favorite_article.dart';
+import './screens/all_articles_screen.dart';
+import 'screens/FavoriteArticle/favorite_article.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Qiita Trend Serch',
+      title: 'Qiita Trend Articles',
       theme: ThemeData(
         primarySwatch: Colors.green,
         fontFamily: 'Hiragino Sans',

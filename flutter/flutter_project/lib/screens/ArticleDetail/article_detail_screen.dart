@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_project/models/article_text.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutter_project/components/article_container.dart';
-import 'package:flutter_project/components/article_text_container.dart';
-import 'package:flutter_project/models/article.dart';
+import '../../components/article_container.dart';
+import '../../components/article_detail_container.dart';
+import '../../models/article_detail.dart';
+import '../../models/article.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
   const ArticleDetailScreen({
-    required this.article,
-    super.key
+    super.key,
+    required this.article
   });
 
   final Article article;
@@ -21,10 +21,10 @@ class ArticleDetailScreen extends StatefulWidget {
 }
 
 class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
-  ArticleText currentArticle = ArticleText(text: "", url: "");
+  ArticleDetail currentArticle = ArticleDetail(text: "", url: "");
 
   Future getArticle() async {
-    final res = await getArticleText(widget.article.id);
+    final res = await getArticleDetail(widget.article.id);
     setState(() {
       currentArticle = res;
     });
@@ -41,33 +41,30 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Article Detail')),
       body: FutureBuilder(
-        future: getArticleText(widget.article.id),
+        future: getArticleDetail(widget.article.id),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text("LOADING..."));
           }else {
-            if(currentArticle.text == "") {
-              return const Center(child: Text("NO Article"));
-            }else {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        ArticleContainer(article: widget.article),
-                        ArticleTextContainer(currentArticle: currentArticle)
-                      ],
-                    )
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      ArticleContainer(article: widget.article),
+                      ArticleDetailContainer(currentArticle: currentArticle)
+                    ],
                   )
-                ],
-              );
-            }
+                )
+              ],
+            );
           }
         },
       ),
+      // リロードボタン
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final res = await getArticleText(widget.article.id);
+          final res = await getArticleDetail(widget.article.id);
           setState(() {
             currentArticle = res;
           });
@@ -78,7 +75,8 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   }
 }
 
-Future<ArticleText> getArticleText(articleId) async {
+/// 記事の本文を取得するための関数
+Future<ArticleDetail> getArticleDetail(articleId) async {
   final uri = Uri.parse('https://qiita.com/api/v2/items/$articleId');
 
   final String token = dotenv.env['QIITA_ACCESS_TOKEN'] ?? '';
@@ -88,8 +86,8 @@ Future<ArticleText> getArticleText(articleId) async {
 
   if(res.statusCode == 200) {
     final dynamic body = jsonDecode(res.body);
-    return ArticleText.fromJson(body);
+    return ArticleDetail.fromJson(body);
   }else {
-    return ArticleText(text: "", url: "");
+    return ArticleDetail(text: "", url: "");
   }
 }

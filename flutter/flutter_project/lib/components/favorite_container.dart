@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_project/models/favorite.dart';
-import 'package:flutter_project/screens/favorite_screen.dart';
+import '../models/favorite.dart';
+import '../screens/FavoriteArticle/favorite_screen.dart';
 
 class FavoriteContainer extends StatefulWidget {
   const FavoriteContainer({

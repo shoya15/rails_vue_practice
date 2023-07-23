@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:flutter_project/models/article.dart';
-import 'package:flutter_project/screens/article_detail_screen.dart';
-import 'package:flutter_project/models/favorite.dart';
+
+import '../models/article.dart';
+import '../models/favorite.dart';
+import '../screens/ArticleDetail/article_detail_screen.dart';
 
 class ArticleContainer extends StatefulWidget {
   const ArticleContainer({
@@ -20,15 +21,16 @@ class ArticleContainer extends StatefulWidget {
 
 class _ArticleContainer extends State<ArticleContainer> {
   List<Favorite> favorite = [];
+
+  /// お気に入り登録されているかどうかを示す変数
   bool isFavorite = false;
 
+  /// お気に入り登録されているかどうかを返す関数
   judgeFavorite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       isFavorite = prefs.getKeys()
-                        .contains(
-                          '${widget.article.authorName}/${widget.article.title}'
-                        );
+                        .contains('${widget.article.authorName}/${widget.article.title}');
     });
   }
 
@@ -38,30 +40,23 @@ class _ArticleContainer extends State<ArticleContainer> {
     judgeFavorite();
   }
 
-  void setInitialSharedPreferences() {
-    initSettingFavorite();
-    updateSharedPreferences();
-  }
-
-  void initSettingFavorite() {
+  Future addFavorite() async {
     favorite = [
       Favorite(
         title: widget.article.title,
         postTime: DateFormat('yyyy/MM/dd').format(DateTime.now()),
-        url: widget.article.linkUrl,
+        url: widget.article.url,
         authorName: widget.article.authorName
       )
     ];
-  }
 
-  Future updateSharedPreferences() async {
     List<String> favoriteArticle = favorite.map((f) => jsonEncode(f.toJson())).toList(); 
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('${widget.article.authorName}/${widget.article.title}', favoriteArticle);
+    prefs.setStringList('${widget.article.authorName}/${widget.article.title}', favoriteArticle);
   }
 
-  removeArticle() async {
+  removeFavorite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('${widget.article.authorName}/${widget.article.title}');
   }
@@ -140,7 +135,7 @@ class _ArticleContainer extends State<ArticleContainer> {
                 // お気に入り
                 OutlinedButton(
                   onPressed: () {
-                    isFavorite ? removeArticle() : setInitialSharedPreferences();
+                    isFavorite ? removeFavorite() : addFavorite();
                   },
                   child: Text(
                     isFavorite ? 'お気に入りを外す' : 'お気に入り'
