@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import 'package:flutter_project/models/favorite.dart';
-import 'package:flutter_project/components/favorite_container.dart';
+import '../../models/favorite.dart';
+import '../../components/favorite_container.dart';
 
 class FavoriteArticleScreen extends StatefulWidget {
   const FavoriteArticleScreen({super.key});
@@ -51,6 +51,7 @@ class _FavoriteArticleScreenState extends State<FavoriteArticleScreen> {
                   ),
                 ],
               ),
+              // リロードボタン
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
                   final res = await getFavoriteArticles();

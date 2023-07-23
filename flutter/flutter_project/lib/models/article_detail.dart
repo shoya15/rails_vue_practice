@@ -1,14 +1,14 @@
-class ArticleText {
+class ArticleDetail {
   final String text;
   final String url;
 
-  ArticleText({
+  ArticleDetail({
     required this.text,
     required this.url
   });
 
-  factory ArticleText.fromJson(Map<String, dynamic> json) {
-    return ArticleText(
+  factory ArticleDetail.fromJson(Map<String, dynamic> json) {
+    return ArticleDetail(
       text: json['body'],
       url:  json['url']
     );

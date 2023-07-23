@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/models/article_text.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../models/article_detail.dart';
+
+/// ブラウザの記事のページに遷移するための関数
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({ 
     super.key,
     required this.currentArticle
   });
 
-  final ArticleText currentArticle;
+  final ArticleDetail currentArticle;
 
   @override
   Widget build(BuildContext context) {
