@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import './screens/all_articles_screen.dart';
 import 'screens/FavoriteArticle/favorite_article.dart';
+import 'package:flutter_project/screens/all_tasks_screen.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -37,7 +38,8 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const _screens = [
     AllArticlesScreen(),
-    FavoriteArticleScreen()
+    FavoriteArticleScreen(),
+    AllTasksScreen()
   ];
 
   int _selectedIndex = 0;
@@ -58,6 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'お気に入り'),
+            BottomNavigationBarItem(icon: Icon(Icons.android), label: 'タスク一覧'),
           ],
           type: BottomNavigationBarType.fixed,
         ));
