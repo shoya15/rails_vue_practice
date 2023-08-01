@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../api/communication.dart';
 import '../models/task.dart';
 import '../components/task_container.dart';
+import 'package:flutter_project/screens/sign_in_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   const AllTasksScreen({super.key});
@@ -16,6 +17,8 @@ enum RadioValue { done, yet }
 
 class _AllTasksScreenState extends State<AllTasksScreen> {
   List<Task> tasks = [];
+  Map currentUser = {};
+
   Future setTasks() async {
     final res = await getTasks();
     setState(() {
@@ -48,8 +51,80 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Communication communication = Communication();
     return Scaffold(
-      appBar: AppBar(title: const Text('All Tasks')),
+      appBar: AppBar(
+        title: const Text('All Tasks'),
+        actions: [
+          if(currentUser.isEmpty)
+            TextButton(
+              child: const Text(
+                'サインイン',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              onPressed: () async {
+                RouteSettings settings = RouteSettings(arguments: currentUser);
+                var result = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => const SignInScreen(),
+                  ),
+                );
+                setState(() {
+                  currentUser = result as Map;
+                });
+              },
+            ),
+          if(currentUser.isNotEmpty)
+            TextButton(
+              child: const Text(
+                'サインアウト',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              onPressed: () async {
+                await communication.delete('/api/sign_out');
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: 
+                      const Text(
+                        'サインアウトしました',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          child: const Text(
+                            'OK',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 12
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              currentUser = {};
+                            });
+                            Navigator.pop(context);
+                          }
+                        )
+                      ]
+                    );
+                  }
+                );
+              },
+            )
+        ],
+      ),
       body: FutureBuilder(
         future: getTasks(),
         builder: (context, snapshot){
@@ -102,7 +177,16 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
             );
           }
         }
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final res = await getTasks();
+          setState(() {
+            tasks = res;
+          });
+        },
+        child: const Icon(Icons.autorenew)
+       ),
     );
   }
 }

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+  
   def check_signed_in
     render_success if current_user.nil?
   end
