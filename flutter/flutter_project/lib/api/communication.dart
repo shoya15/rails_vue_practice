@@ -25,6 +25,13 @@ class Communication {
     return res;
   }
 
+  Future<dynamic> put(String endpoint, [params]) async {
+    final uri = Uri.http(baseURL, endpoint);
+    final headers = getHeaders();
+    dynamic res = await http.put(uri, headers: headers, body: jsonEncode(params));
+    return res;
+  }
+
   Future<dynamic> delete(String endpoint) async {
     final uri = Uri.http(baseURL, endpoint);
     final headers = getHeaders();

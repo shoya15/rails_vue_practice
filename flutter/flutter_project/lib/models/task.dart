@@ -2,18 +2,21 @@ class Task {
   final String content;
   final int userId;
   final bool status;
+  final int id;
 
   Task({
     required this.content,
     required this.userId,
-    required this.status
+    required this.status,
+    required this.id
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
       content: json['content'],
       userId : json['user_id'],
-      status : json['status']
+      status : json['status'],
+      id: json['id']
     );
   }
 }
