@@ -18,6 +18,7 @@ enum RadioValue { done, yet }
 class _AllTasksScreenState extends State<AllTasksScreen> {
   List<Task> tasks = [];
   Map currentUser = {};
+  bool isChecked = false;
 
   Future setTasks() async {
     final res = await getTasks();
@@ -35,10 +36,15 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   RadioValue groupValue = RadioValue.yet;
 
   List<Task> filterTasks() {
-    if(groupValue == RadioValue.done) {
-      return tasks.where((task) => task.status).toList();
+    if(isChecked) {
+      List<Task> mytasks = tasks.where((task) => task.userId == currentUser['user_id']).toList();
+      return groupValue == RadioValue.done ? 
+             mytasks.where((task) => task.status).toList() :
+             mytasks.where((task) => !task.status).toList();
     }else {
-      return tasks.where((task) => !task.status).toList();
+      return groupValue == RadioValue.done ? 
+             tasks.where((task) => task.status).toList() :
+             tasks.where((task) => !task.status).toList();
     }
   }
 
@@ -46,6 +52,12 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   _onRadioSelected(value) {
     setState(() {
       groupValue = value;
+    });
+  }
+
+  _onChecked(value) {
+    setState(() {
+      isChecked = value;
     });
   }
 
@@ -136,40 +148,66 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: RadioListTile(
-                        title: const Text(
-                          '完了済み',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                          ),
-                        ),
-                        value: RadioValue.done,
-                        groupValue: groupValue,
-                        onChanged: (value) => _onRadioSelected(value)
+                      child: ListTileTheme(
+                        horizontalTitleGap: 0.0,
+                        child: RadioListTile(
+                          title: const Text(
+                              '完了済み',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                              ),
+                            ),
+                          value: RadioValue.done,
+                          groupValue: groupValue,
+                          onChanged: (value) => _onRadioSelected(value)
+                        )
                       )
                     ),
                     Expanded(
-                      child: RadioListTile(
-                        title: const Text(
-                          '未完了',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
+                      child: ListTileTheme(
+                        horizontalTitleGap: 0.0,
+                        child: RadioListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          title: const Text(
+                            '未完了',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        value: RadioValue.yet,
-                        groupValue: groupValue,
-                        onChanged: (value) => _onRadioSelected(value)
+                          value: RadioValue.yet,
+                          groupValue: groupValue,
+                          onChanged: (value) => _onRadioSelected(value)
+                        )
                       )
-                    )
+                    ),
+                    if(currentUser.isNotEmpty)
+                      Expanded(
+                        child: ListTileTheme(
+                          horizontalTitleGap: 0.0,
+                          child: CheckboxListTile(
+                            controlAffinity: ListTileControlAffinity.leading,
+                            contentPadding: const EdgeInsets.all(0),
+                            title: const Text(
+                              '自分のタスク',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12
+                              ),
+                            ),
+                            value: isChecked,
+                            onChanged: (value) => _onChecked(value)
+                          )
+                        )
+                      ),
                   ]
                 ),
                 Expanded(
                   child: ListView(
                     children: 
                       filterTasks()
-                      .map((task) => TaskContainer(task: task))
+                      .map((task) => TaskContainer(task: task, currentUser: currentUser))
                       .toList()
                   )
                 ),

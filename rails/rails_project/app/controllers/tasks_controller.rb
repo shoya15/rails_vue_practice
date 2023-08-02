@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :tasks, only: [:index, :favorites_count]
+  skip_before_action :verify_authenticity_token, only: [:create, :update]
   
   def index
     render_success tasks: @tasks
@@ -26,6 +27,9 @@ class TasksController < ApplicationController
   end
 
   def update
+    pp "hoge"
+    pp params
+    pp "hoge"
     @task = Task.find(params[:id])
     render_success task: @task if @task.update(task_params)
   end
