@@ -67,20 +67,8 @@ class _TaskContainer extends State<TaskContainer> {
                   )
                 )
               ),
-              Text(
-                widget.task.content,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                ),
-              ),
-              Text(
-                "  ← created by user_id: ${widget.task.userId}",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                ),
-              )
+              Text(widget.task.content),
+              Text("  ← created by user_id: ${widget.task.userId}")
             ]
           )
         )

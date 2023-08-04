@@ -93,13 +93,7 @@ class _ArticleContainer extends State<ArticleContainer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 投稿日
-                Text(
-                  DateFormat('yyyy/MM/dd').format(widget.article.publishedAt),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
+                Text(DateFormat('yyyy/MM/dd').format(widget.article.publishedAt)),
 
                 // タイトル
                 Text(
@@ -109,28 +103,17 @@ class _ArticleContainer extends State<ArticleContainer> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
 
                 // タグ
                 Text(
                   '#${widget.article.tags.join(' #')}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black,
-                    fontStyle: FontStyle.italic,
-                  ),
+                  style: const TextStyle(fontStyle: FontStyle.italic,)
                 ),
 
                 // 作成者
-                Text(
-                  widget.article.authorName,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black,
-                  )
-                ),
+                Text(widget.article.authorName),
 
                 // お気に入り
                 OutlinedButton(

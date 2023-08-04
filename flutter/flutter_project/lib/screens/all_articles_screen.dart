@@ -36,7 +36,7 @@ class _AllArticlesScreenState extends State<AllArticlesScreen> {
         future: getQiitaTrend(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: Text("LOADING...", style: TextStyle(color: Colors.black),));
+            return const Center(child: Text("LOADING..."));
           }else {
             return Column(
               children: [
