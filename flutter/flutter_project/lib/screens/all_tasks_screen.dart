@@ -5,6 +5,7 @@ import '../api/communication.dart';
 import '../models/task.dart';
 import '../components/task_container.dart';
 import 'package:flutter_project/screens/sign_in_screen.dart';
+import 'package:flutter_project/screens/create_task_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   const AllTasksScreen({super.key});
@@ -68,6 +69,23 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
       appBar: AppBar(
         title: const Text('All Tasks'),
         actions: [
+          if(currentUser.isNotEmpty)
+            TextButton(
+              child: const Text(
+                'タスク登録',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) => CreateTaskScreen(currentUser: currentUser))
+                  ),
+                );
+              }
+            ),
           if(currentUser.isEmpty)
             TextButton(
               child: const Text(
