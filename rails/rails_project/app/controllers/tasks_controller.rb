@@ -14,6 +14,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    current_user = User.find_by(id: task_params[:user_id]) if current_user.nil?
     @task.user_id = current_user.id
     if @task.save
       render_success task: {
@@ -27,9 +28,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    pp "hoge"
-    pp params
-    pp "hoge"
     @task = Task.find(params[:id])
     render_success task: @task if @task.update(task_params)
   end
@@ -39,7 +37,8 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(
       :content,
-      :status
+      :status,
+      :user_id
     )
   end
 
