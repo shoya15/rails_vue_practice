@@ -29,10 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: [
               TextField(
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black
-                ),
+                style: const TextStyle(fontSize: 18,),
                 decoration: const InputDecoration(
                   hintText: 'ユーザー名またはメールアドレスを入力してください',
                 ),
@@ -44,10 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             
               TextField(
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black
-                ),
+                style: const TextStyle(fontSize: 18,),
                 decoration: const InputDecoration(
                   hintText: 'パスワードを入力してください',
                 ),

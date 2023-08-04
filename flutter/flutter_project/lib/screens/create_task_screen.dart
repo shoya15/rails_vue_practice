@@ -33,10 +33,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             children: [
               TextField(
                 controller: _editController,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black
-                ),
+                style: const TextStyle(fontSize: 18),
                 decoration: const InputDecoration(
                   hintText: 'タスクを入力してください',
                 ),
@@ -65,19 +62,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                           title: 
                           const Text(
                             'タスクを追加しました',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16
-                            ),
+                            style: TextStyle(fontSize: 16)
                           ),
                           actions: [
                             TextButton(
                               child: const Text(
                                 'OK',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12
-                                ),
+                                style: TextStyle(color: Colors.blue)
                               ),
                               onPressed: () {
                                 _editController.clear();

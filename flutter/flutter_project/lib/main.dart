@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         fontFamily: 'Hiragino Sans',
         appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF55C500)),
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.white),
       ),
       home: const MyStatefulWidget(),
     );

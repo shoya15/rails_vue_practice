@@ -44,13 +44,7 @@ class _FavoriteContainer extends State<FavoriteContainer> {
           child: Column(
             children: [
               // お気に入りした日
-              Text(
-                widget.favorite.postTime,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                ),
-              ),
+              Text(widget.favorite.postTime),
 
               // タイトル
               Text(
@@ -60,7 +54,6 @@ class _FavoriteContainer extends State<FavoriteContainer> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
 

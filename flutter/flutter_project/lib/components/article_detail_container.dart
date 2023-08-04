@@ -30,13 +30,7 @@ class ArticleDetailContainer extends StatelessWidget {
             },
             child: const Text('ブラウザで見る'),
           ),
-          Text(
-            currentArticle.text,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.black,
-            )
-          ),
+          Text(currentArticle.text)
         ])
     );
   }

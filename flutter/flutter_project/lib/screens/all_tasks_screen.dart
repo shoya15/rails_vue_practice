@@ -126,19 +126,13 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                       title: 
                       const Text(
                         'サインアウトしました',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16
-                        ),
+                        style: TextStyle(fontSize: 16)
                       ),
                       actions: [
                         TextButton(
                           child: const Text(
                             'OK',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 12
-                            ),
+                            style: TextStyle(color: Colors.blue)
                           ),
                           onPressed: () {
                             setState(() {
@@ -159,7 +153,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         future: getTasks(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: Text("LOADING...", style: TextStyle(color: Colors.black),));
+            return const Center(child: Text("LOADING..."));
           }else {
             return Column(
               children: [
@@ -169,13 +163,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                       child: ListTileTheme(
                         horizontalTitleGap: 0.0,
                         child: RadioListTile(
-                          title: const Text(
-                              '完了済み',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                              ),
-                            ),
+                          title: const Text('完了済み'),
                           value: RadioValue.done,
                           groupValue: groupValue,
                           onChanged: (value) => _onRadioSelected(value)
@@ -187,13 +175,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                         horizontalTitleGap: 0.0,
                         child: RadioListTile(
                           contentPadding: const EdgeInsets.all(0),
-                          title: const Text(
-                            '未完了',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
+                          title: const Text('未完了'),
                           value: RadioValue.yet,
                           groupValue: groupValue,
                           onChanged: (value) => _onRadioSelected(value)
@@ -207,13 +189,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                           child: CheckboxListTile(
                             controlAffinity: ListTileControlAffinity.leading,
                             contentPadding: const EdgeInsets.all(0),
-                            title: const Text(
-                              '自分のタスク',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12
-                              ),
-                            ),
+                            title: const Text('自分のタスク'),
                             value: isChecked,
                             onChanged: (value) => _onChecked(value)
                           )
